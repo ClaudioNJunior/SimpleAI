@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple AI</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="Common.js"></script>
+    <script src="PVector.js"></script>
+    <style>
+        * {
+            color: #fff;
+        }
+
+        body {
+            background-color: rgb(27, 27, 27);
+        }
+
+        #area {
+            width: 800px;
+            height: 800px;
+            position: relative;
+            margin-left: 50%;
+            transform: translate(-50%, 0);
+            /* border: 1px solid rgb(73, 73, 73); */
+            box-shadow: rgb(20, 20, 20) 0 0 25px 4px;
+            overflow: hidden;
+            background-color: #222;
+        }
+
+        .dot {
+            width: 4px;
+            height: 4px;
+            background-color: #fff;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .dot.best {
+            width: 4px;
+            height: 4px;
+            background-color: #0f0;
+            z-index: 2;
+            border: 1px solid #ccc;
+            box-shadow: rgba(255, 255, 255, .6) 0 0 25px 5px;
+        }
+
+        .obstacle {
+            position: absolute;
+            background-color: #4444ff;
+            border: 1px solid #ccc;
+            transform: translate(-50%, -50%);
+        }
+
+        .controls {
+            position: fixed;
+            right: 100px;
+            top: 50%;
+            transform: translate(0, -50%);
+        }
+
+        .control-group {
+            height: 70px;
+            margin: 25px 0;
+        }
+
+        #velocity {
+            box-shadow: rgba(255, 255, 255, .1) 0 0 10px 4px;
+        }
+
+#velocity div {
+    float: right;
+    width: 50%;
+    text-align: center;
+    padding: 25px 0;
+    line-height: 20px;
+    font-size: 2em;
+    height: 20px;
+    cursor: pointer;
+}
+
+#velocity div:hover {
+    background-color: rgba(255, 255, 255, .05);
+}
+
+#velocity div:active {
+    background-color: rgba(255, 255, 255, 1);
+    color: #222;
+}
+
+        .clear {
+            clear: both;
+        }
+
+        #goal {
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            border: 1px solid #ccc;
+            animation-name: pulseGoal;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease;
+        }
+
+        #gen {
+            text-align: center;
+            font-family: Calibri, sans-serif;
+            font-size: 90px;
+        }
+
+        @keyframes pulseGoal {
+            0% {
+                box-shadow: rgb(255, 0, 0) 0 0 35px 10px;
+            }
+
+            35% {
+                box-shadow: rgb(255, 0, 0) 0 0 5px 0px;
+            }
+
+            100% {
+                box-shadow: rgb(255, 0, 0) 0 0 35px 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="gen">1</h1>
+    <div id="area">
+    </div>
+    <div class="controls">
+        <div class="control-group" id="velocity">
+            <div onclick="decreaseVel()">-</div>
+            <div onclick="increaseVel()">+</div>
+        </div>
+        <div class="control-group" id="showBest">
+            <label for="chkBest">Mostrar apenas o melhor</label>
+            <input type="checkbox" id="chkBest" />
+        </div>
+    </div>
+    <p>
+        <span>Geração em que atingiu o objetivo: <span id="objectiveGen"></span></span>
+        <span>Passos em que fez a primeira: <span id="objectiveSteps"></span></span>
+        <span>Tempo de última geração: <span id="time"></span></span>
+        <span>Quantidade mínima de passos: <span id="steps"></span></span>
+        <span>Quantidade mortos na parede: <span id="deadByWall"></span></span>
+        <span>Quantidade mortos por falta de energia: <span id="deadByEnergy"></span></span>
+    </p>
+    <script src="Brain.js"></script>
+    <script src="Dot.js"></script>
+    <script src="Population.js"></script>
+    <script src="Obstacle.js"></script>
+    <script src="Main.js"></script>
+    <script>
+        $(document).ready(() => {
+            setup();
+        });
+    </script>
+</body>
+
+</html>
