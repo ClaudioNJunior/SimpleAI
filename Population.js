@@ -124,7 +124,7 @@ class Population{
             }
         }
 
-        console.error("Deu bosta");
+        //Should never get here
 
         return null;
     }
